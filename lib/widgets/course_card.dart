@@ -1,24 +1,38 @@
-import 'package:demo/models/course.dart';
 import 'package:flutter/material.dart';
+import 'package:demo/models/course.dart';
 
 class CourseCard extends StatelessWidget {
-  final Course course; // Use the Course model
+  final Course course;
+
   const CourseCard({super.key, required this.course});
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15.0),
       ),
-      child: ListTile(
-        title: Text(course.name, style: const TextStyle(fontWeight: FontWeight.bold)),
-        subtitle: Text(course.description), // Display course description
-        trailing: const Icon(Icons.arrow_forward),
-        onTap: () {
-          // Add action when the card is tapped
-        },
+      elevation: 4,
+      child: Container(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              course.iconPath,
+              height: 50, // Adjust icon size as needed
+            ),
+            const SizedBox(height: 10),
+            Text(
+              course.name,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                    fontSize: 18, // Modern font size
+                    fontWeight: FontWeight.bold,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }
