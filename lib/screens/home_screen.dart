@@ -1,8 +1,11 @@
-import 'package:demo/models/course.dart'; // Import the Course model
-import 'package:demo/widgets/course_card.dart'; // Import the CourseCard widget
-import 'package:demo/widgets/search_field.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/services.dart';
+import 'package:demo/widgets/search_field.dart';
+import 'package:demo/widgets/tutor_card.dart'; // Define a TutorCard widget for slidable tutors
+import 'package:demo/models/tutor.dart'; // Define Tutor model
+import 'package:demo/models/course.dart';
+import 'package:demo/widgets/course_card.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,11 +15,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final List<Tutor> tutors = [
+    Tutor(name: "Jotaro", rating: 4.8, imageUrl: 'assets\images\tutor.jpg', course: 'Physics'),
+    Tutor(name: "Ali bin Abu", rating: 5.0, imageUrl: 'assets\images\tutor.jpg', course: 'Add Math'),
+    Tutor(name: "Suzana Li", rating: 4.8, imageUrl: 'assets\images\tutor.jpg', course: 'Coding'),
+  ];
+
   final List<Course> courses = [
     Course(name: "Physics", description: "Learn the fundamentals of Physics."),
     Course(name: "Biology", description: "Explore the wonders of Biology."),
     Course(name: "Computer Science", description: "Introduction to programming and algorithms."),
-    // Add more courses as needed
   ];
 
   @override
@@ -25,8 +33,24 @@ class _HomeScreenState extends State<HomeScreen> {
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const AppBar(),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              child: Text(
+                "Recommended Tutors",
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+              ),
+            ),
+            CarouselSlider(
+              options: CarouselOptions(height: 160, enlargeCenterPage: true, enableInfiniteScroll: true),
+              items: tutors.map((tutor) {
+                return TutorCard(tutor: tutor); // Create a custom TutorCard widget
+              }).toList(),
+            ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
               child: Row(
@@ -111,8 +135,8 @@ class AppBar extends StatelessWidget {
                   ),
                 ],
               ),
-              CircleAvatar(
-                backgroundImage: const AssetImage('assets/images/malaysia-flag-1.jpg'), // Fixed asset path
+              const CircleAvatar(
+                backgroundImage: AssetImage('assets/images/malaysia-flag-1.jpg'), // Fixed asset path
                 radius: 25,
               ),
             ],

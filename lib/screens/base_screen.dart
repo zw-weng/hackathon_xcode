@@ -1,9 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:demo/constants/colors.dart';
 import 'package:demo/screens/home_screen.dart';
 import 'package:demo/screens/profile_screen.dart';
 import 'package:demo/screens/resources_screen.dart';
 import 'package:demo/screens/tuition_screen.dart';
-import 'package:flutter/material.dart';
 
 class BaseScreen extends StatefulWidget {
   const BaseScreen({super.key});
@@ -28,40 +29,40 @@ class _BaseScreenState extends State<BaseScreen> {
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: kPrimaryColor,
-        unselectedItemColor: const Color(0xFF202244), // Custom color for unselected icons
-        elevation: 0,
-        iconSize: 30,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined), // Set icon size
-            activeIcon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.library_books_outlined),
-            activeIcon: Icon(Icons.library_books),
-            label: "Resources",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school_outlined),
-            activeIcon: Icon(Icons.school),
-            label: "Tuition",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            activeIcon: Icon(Icons.person),
-            label: "Profile",
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        onTap: (int index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+      bottomNavigationBar: Container(
+        color: Colors.white,
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+        child: GNav(
+          gap: 8,
+          activeColor: Colors.white,
+          color: Colors.grey.shade600,
+          padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          tabBackgroundColor: kPrimaryColor.withOpacity(0.8),
+          selectedIndex: _selectedIndex,
+          onTabChange: (index) {
+            setState(() {
+              _selectedIndex = index;
+            });
+          },
+          tabs: const [
+            GButton(
+              icon: Icons.home,
+              text: 'Home',
+            ),
+            GButton(
+              icon: Icons.library_books,
+              text: 'Resources',
+            ),
+            GButton(
+              icon: Icons.school,
+              text: 'Tuition',
+            ),
+            GButton(
+              icon: Icons.person,
+              text: 'Profile',
+            ),
+          ],
+        ),
       ),
     );
   }
